@@ -935,8 +935,8 @@ if ($action === 'submit-lead') {
   (function () {
     'use strict';
 
-    var API_CHAT_URL = 'index.php?action=chat';
-    var API_LEAD_URL = 'index.php?action=submit-lead';
+    var API_CHAT_URL = 'https://legals-ai.onrender.com/index.php?action=chat';
+    var API_LEAD_URL = 'https://legals-ai.onrender.com/index.php?action=submit-lead';
 
     var conversationHistory = [];
     var isProcessing = false;
