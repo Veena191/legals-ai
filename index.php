@@ -1,4 +1,6 @@
 <?php
+error_reporting(0);
+ini_set('display_errors', 0);
 /**
  * LEGALS AI — Single-file PHP application
  * =========================================
@@ -248,13 +250,12 @@ if ($action === 'chat') {
     $aiMessage    = $data['choices'][0]['message']['content'];
     $leadData     = null;
     $cleanMessage = $aiMessage;
-
-    if (preg_match('//s', $aiMessage, $matches)) {
-        $leadJson     = trim($matches[1]);
-        $leadData     = json_decode($leadJson, true);
-        $cleanMessage = trim(preg_replace('//s', '', $aiMessage));
-    }
-
+    
+if (preg_match('/your_pattern_here/s', $aiMessage, $matches)) {
+    $leadJson = trim($matches[1] ?? '');
+    $leadData = json_decode($leadJson, true);
+    $cleanMessage = trim(preg_replace('/your_pattern_here/s', '', $aiMessage));
+}
     $result = array(
         'success' => true,
         'message' => $cleanMessage,
