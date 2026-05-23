@@ -15,7 +15,7 @@
 // ═══════════════════════════════════════════════════════════════
 
 // ── Groq Cloud API ──────────────────────────────────────────
-define('GROQ_API_KEY',     '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');
+define('GROQ_API_KEY',     getenv('GROQ_API_KEY'));
 define('GROQ_API_URL',     'https://api.groq.com/openai/v1/chat/completions');
 define('GROQ_MODEL',       'llama-3.3-70b-versatile');
 define('GROQ_MAX_TOKENS',  1024);
