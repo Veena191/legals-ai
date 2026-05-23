@@ -251,11 +251,12 @@ if ($action === 'chat') {
     $leadData     = null;
     $cleanMessage = $aiMessage;
     
-if (preg_match('/your_pattern_here/s', $aiMessage, $matches)) {
-    $leadJson = trim($matches[1] ?? '');
-    $leadData = json_decode($leadJson, true);
-    $cleanMessage = trim(preg_replace('/your_pattern_here/s', '', $aiMessage));
-}
+$result = array(
+    'success' => true,
+    'message' => $cleanMessage,
+    'model'   => isset($data['model']) ? $data['model'] : GROQ_MODEL,
+    'usage'   => isset($data['usage']) ? $data['usage'] : null,
+);
     $result = array(
         'success' => true,
         'message' => $cleanMessage,
@@ -1124,26 +1125,20 @@ if ($action === 'submit-lead') {
           $chatInput.prop('disabled', false);
           $chatInput.focus();
         },
-        error: function (xhr) {
-          hideTyping();
-          isProcessing = false;
-          $chatSendBtn.prop('disabled', false);
-          $chatInput.prop('disabled', false);
+       error: function(xhr) {
+    console.log("STATUS:", xhr.status);
+    console.log("RESPONSE:", xhr.responseText);
 
-          var errMsg = 'I apologize, there seems to be a connection issue. Please try again.';
-          try {
-            var errData = JSON.parse(xhr.responseText);
-            if (errData.error) {
-              errMsg = 'Sorry, I encountered an issue: ' + errData.error + '. Please try again.';
-            }
-          } catch (e) {}
+    hideTyping();
+    isProcessing = false;
 
-          addMessage('ai', errMsg);
-          $chatInput.focus();
-        }
-      });
-    }
+    $chatSendBtn.prop('disabled', false);
+    $chatInput.prop('disabled', false);
 
+    addMessage('ai',
+      'ERROR: ' + xhr.status + ' | ' + xhr.responseText
+    );
+}
     function submitLead(leadData) {
       if (leadSubmitted) return;
 
